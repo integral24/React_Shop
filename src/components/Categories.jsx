@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 
-function Categories() {
+function Categories({ changeTitle }) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const categories = ['Все', 'Мясные', 'Вегетарианские', 'Гриль', 'Острые', 'Закрытые'];
 
   const selectActiveIndex = (idx) => {
     setActiveIndex(idx);
+    changeTitle(categories[idx])
   };
-
-  const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
 
   return (
     <div className="categories">
