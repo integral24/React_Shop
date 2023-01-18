@@ -1,22 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import dh from '../assets/helpers/domhelper.js';
 
-function Sort() {
+function Sort({ sortList, sortTitle, setSortTitle, arrowAsc, setArrowAsc }) {
   const [open, setOpen] = useState(false);
-  const [sortTitle, setSortTitle] = useState(0);
-  const sortList = ['популярности', 'цене', 'алфавиту'];
+  const sortRef = useRef(null);
 
-  function selectTitle(idx) {
+  useEffect(() => {
+    if (open) dh.addEventListener('click', close);
+    return () => dh.removeEventListener('click', close);
+  }, [open]);
+
+  const close = useCallback((e) => {
+    if (!sortRef.current?.contains(e.target)) setOpen(false);
+  }, []);
+
+  const setSortTitleHandler = (event, idx) => {
+    event.stopPropagation();
     setSortTitle(idx);
-    setOpen((prev) => !prev);
-  }
+    setOpen(false);
+  };
 
   return (
-    <div className="sort">
+    <div className="sort" ref={sortRef}>
       <div className="sort__label">
-        <span className="icon-arrow-top" />
         <b>Сортировка по:</b>
         <div onClick={() => setOpen((prev) => !prev)}>
-          <span>{sortList[sortTitle]}</span>
+          <span className="sort__title"><strong>{sortList[sortTitle].name}</strong></span>
+        </div>
+        <div className="icon-arrow" onClick={() => setArrowAsc(prev => !prev)}>
+          <div className={`icon-arrow-top ${!arrowAsc ? 'desc' : ''}`}></div>
         </div>
       </div>
       {open && (
@@ -25,9 +37,9 @@ function Sort() {
             {sortList.map((el, idx) => (
               <li
                 key={idx}
-                onClick={() => selectTitle(idx)}
+                onClick={(event) => setSortTitleHandler(event, idx)}
                 className={sortTitle === idx ? 'active' : ''}>
-                {sortList[idx]}
+                {sortList[idx].name}
               </li>
             ))}
           </ul>

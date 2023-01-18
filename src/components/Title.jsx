@@ -3,7 +3,7 @@ import React from 'react';
 function Title({ children, className }) {
   return (
     <h2 className={className}>
-      {children}
+      <strong>{children}</strong>
     </h2>
   );
 }

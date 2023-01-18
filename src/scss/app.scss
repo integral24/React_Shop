@@ -2,9 +2,13 @@
 @import './libs/normalize';
 @import './components/all';
 
+@mixin title($size) {
+  font-size: $size;
+}
 
 body {
-  background-color: $background;
+  background-color: #fff;
+  padding: 0 calc(20px - (100vw - 100%)) 0 0;
 }
 
 .wrapper {
@@ -13,26 +17,206 @@ body {
   background-color: #fff;
   margin: 50px auto;
   border-radius: 10px;
-  max-width: 1400px;
+  max-width: 1615px;
+  min-width: 465px;
 }
 
 .content {
   padding: 40px 0;
 
   &__title {
-    margin: 35px 0;
+    margin: 20px 0 30px 0;
+    padding-left: 4px;
+
+    &.small {
+      @include title(24px)
+    }
+
+    &.medium {
+      @include title(28px)
+    }
+
+    &.large {
+      @include title(32px)
+    }
   }
 
   &__items {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 2px;
+
+    @media (max-width: 1560px) {
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+    }
+
+    @media (max-width: 1216px) {
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(4, 1fr);
+    }
+
+    @media (max-width: 830px) {
+      grid-template-columns: repeat(1, 1fr);
+      grid-template-rows: repeat(8, 1fr);
+    }
   }
 
   &__top {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
+
+    .burger {
+      display: none;
+
+      @media (max-width: 830px) {
+        display: block;
+      }
+
+      .burger__button {
+        width: 85px;
+        height: 85px;
+        display: flex;
+        margin: -20px 0 18px 5px;
+        cursor: pointer;
+        background-color: #fff;
+        border: 1px solid $orange;
+        border-radius: 16px;
+        position: relative;
+        transition: all $duration ease-in-out ;
+        
+        .burger__img {
+          background-image: url('../assets/img/burger.svg');
+          background-repeat: no-repeat;
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          top: 4px;
+          left: 4px;
+        }
+
+        &:hover {
+          background-color: $orange;
+          transition: all $duration ease-in-out ;
+
+          .burger__img {
+            background-image: url('../assets/img/burger_white.svg');
+            background-repeat: no-repeat;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 4px;
+            left: 4px;
+          }
+        }
+
+        &:active {
+          background-color: darken($orange, 12%);
+          transform: translateY(1px);
+        }
+      }
+    }
+  }
+}
+
+.burger__page {
+  position: fixed;
+  top: 63px;
+  left: 0px;
+  width: 56%;
+  z-index: 2;
+  min-width: 262px;
+  transform: translateX(0px);
+  transition: transform 0.3s ease-in-out;
+
+  .bp__header {
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(254, 93, 30);
+    padding: 18px 7% 18px 14%;
+    align-items: center;
+    border-top-right-radius: 5px;
+
+    .bp__title {
+      font-size: 22px;
+      color: #fff;
+      margin-top: 2px;
+
+    }
+
+    .bp__button {
+      background-color: #F3F3F3;
+      width: 50px;
+      height: 32px;
+      border: 0px;
+      cursor: pointer;
+      border-radius: 10px;
+      margin-left: 10px;
+
+      &:hover {
+        background-color: darken(#f9f9f9, 10%);
+      }
+
+      &:active {
+        background-color: darken(#f9f9f9, 15%);
+      }
+    }
+  }
+
+  .bp__categories {
+    width: 100%;
+    padding: 10%;
+    background-color: rgba(254, 95, 30, 0.8);
+    border-bottom-right-radius: 5px;
+
+    ul {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  
+      li {
+        width: 100%;
+        margin-bottom: 4px;
+  
+        button {
+          background-color: #F3F3F3;
+          padding: 13px 30px;
+          border-radius: 30px;
+          border: 2px solid #F3F3F3;
+          margin-right: 8px;
+          margin-bottom: 8px;
+          font-weight: bold;
+          cursor: pointer;
+          transition: background-color 0.1s ease-in-out;
+          @include noselect();
+          width: 100%;
+  
+          &:hover {
+            background-color: darken(#f9f9f9, 10%);
+            border: 2px solid darken(#f9f9f9, 10%);
+          }
+  
+          &:active {
+            background-color: darken(#f9f9f9, 15%);
+            border: 2px solid darken(#f9f9f9, 15%);
+          }
+  
+          &.active {
+            background-color: #282828;
+            background-color: $orange;
+            color: #fff;
+            border: 2px solid #fff;
+          }
+        }
+      }
+    }    
+  }
+
+  &.close {
+    transform: translateX(-485px);
   }
 }
 
@@ -43,6 +227,7 @@ body {
   &--cart {
     max-width: 820px;
     margin: 90px auto;
+
     .content__title {
       margin: 0;
     }
@@ -60,10 +245,6 @@ body {
     display: flex;
     align-items: center;
     font-size: 32px;
-
-    main-title {
-      color: red;
-    }
 
     svg {
       position: relative;

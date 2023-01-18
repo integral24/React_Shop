@@ -2,27 +2,29 @@
 
 .sort {
   position: relative;
+  
   &__label {
     display: flex;
     align-items: center;
-
-    & .icon-arrow-top {
-      margin-right: 8px;
-      background-image: url('../../assets/img/arrow-top.svg');
-      background-repeat: no-repeat;
-      width: 10px;
-      height: 6px;
-    }
+    width: 265px;
+    margin-top: 10px;
 
     b {
       margin-right: 8px;
     }
 
     span {
-      color: $orange;
-      border-bottom: 1px dashed $orange;
-      cursor: pointer;
-      user-select: none; 
+      
+      &.sort__title {
+        color: $orange;
+        cursor: pointer;
+        user-select: none; 
+        border-bottom: 1px dashed $orange;
+
+        &:hover {
+          color: darken($orange, 10%);
+        }
+      }
     }
   }
 
@@ -54,5 +56,34 @@
         }
       }
     }
+  }
+}
+
+.icon-arrow {
+  width: 25px;
+  height: 14px;
+  cursor: pointer;
+      
+  &-top {
+    background-image: url('../../assets/img/arrow-top.svg');
+    background-repeat: no-repeat;
+    width: 18px;
+    height: 6px;
+    margin-left: 10px;
+    margin-top: 3px;
+
+    &.desc {
+      transform: rotate(-180deg);
+      margin: 3px 0 0 2px;
+    }
+  }
+
+  &:hover {
+    transform: scale(1.1);
+    transition: transform 0.1 ease-in-out ;
+  }
+
+  &:active {
+    transform: translateY(1px);
   }
 }
