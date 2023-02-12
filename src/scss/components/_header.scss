@@ -1,4 +1,4 @@
-@import '../variables';
+@import './variables';
 
 .header {
   border-bottom: 1px solid $gray-line;
@@ -8,6 +8,64 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    .search {
+      position: relative;
+      z-index: 2;
+
+      input {
+        padding: 7px 10px 7px 40px;
+        font-size: 16px;
+        border-radius: 6px;
+        border: 1px solid #9b9b9b;
+        margin: 0 14px;
+        width: 242px;
+        padding-right: 27px;
+        background: content-box;
+        transition: all $duration ease-in-out ;
+
+        &:hover {
+          border: 1px solid #292929;
+          transition: all $duration ease-in-out ;
+        }
+
+        &:focus {
+          border: 1px solid #4b4b4b;
+          transition: all $duration ease-in-out ;
+        }
+      }
+
+      .icon-search {
+        background-image: url('../../assets/img/search.svg');
+        background-repeat: no-repeat;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0.5;
+        top: 7px;
+        left: 21px;
+        z-index: -1;
+      }
+
+      .icon-clear {
+        width: 23px;
+        height: 23px;
+        opacity: 0.3;
+        position: absolute;
+        top: 7px;
+        right: 18px;
+
+        &:hover {
+          opacity: 0.6;
+          cursor: pointer;
+          transition: all $duration ease-in-out ;
+        }
+      }
+
+      @media (max-width: 830px) {
+        display: none;
+      }
+    }
   }
 
   &__logo {

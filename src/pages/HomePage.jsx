@@ -1,29 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Categories from '../components/Categories.jsx';
 import Sort from '../components/Sort.jsx';
 import Card from '../components/Card.jsx';
 import Skeleton from '../components/Skeleton.jsx';
 import axios from 'axios';
 import Title from '../components/Title.jsx';
+import { SearchContext } from '../App.js';
+import { useSelector, useDispatch } from 'react-redux';
+import { setCategoryIndex } from '../redux/slices/filterSlice.js';
 
 function HomePage() {
-  const URL = 'https://63b7bf6b4d97e82aa3c4bb44.mockapi.io/api/items';
-  const [categoryIndex, setCategoryIndex] = useState(0);
-  const [sortTitle, setSortTitle] = useState(0);
+  const categoryIndex = useSelector(state => state.filterSlice.categoryIndex);
+  const sortList = useSelector(state => state.filterSlice.sortList);
+
+  const sortTitle = useSelector(state => state.filterSlice.sortTitle);
+  const dispatch = useDispatch();
   const [arrowAsc, setArrowAsc] = useState(false);
   const [pizzas, setPizzas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [title, setTitle] = useState('Bce');
   const [burgerOpen, setBurgerOpen] = useState(false);
-
-  const sortList = [
-    {name: 'популярности', sort: 'rating'}, 
-    {name: 'цене', sort: 'price'}, 
-    {name: 'алфавиту', sort: 'title'}
-  ];
+  const { searchValue } = useContext(SearchContext);
 
   useEffect(() => {
-    getPizzas(URL);
+    getPizzas(`${process.env.REACT_APP_URL}/items`);
     window.scrollTo(0, 0);
   }, [categoryIndex, sortTitle, arrowAsc]);
 
@@ -33,7 +33,6 @@ function HomePage() {
       : `${link}?category=${categoryIndex}&sortBy=${sortList[sortTitle].sort}`;
 
     const result = arrowAsc ? `${requestLink}&order=asc` : `${requestLink}&order=desc`;
-    console.log(result);
     return result;
   }
 
@@ -54,6 +53,10 @@ function HomePage() {
 
   const closeBurgerMenu = () => {
     setBurgerOpen(false);
+  };
+
+  const selectCategory = (index) => {
+    dispatch(setCategoryIndex(index));
   };
 
   return (
@@ -78,7 +81,7 @@ function HomePage() {
                 changeTitle={changeTitle}
                 closeBurger={() => closeBurgerMenu()} 
                 value={categoryIndex}
-                selectCategory={(idx) => setCategoryIndex(idx)}/>
+                selectCategory={selectCategory}/>
             </div>
           </div>
         </div>
@@ -87,12 +90,10 @@ function HomePage() {
             changeTitle={changeTitle} 
             closeBurger={() => closeBurgerMenu()} 
             value={categoryIndex}
-            selectCategory={(idx) => setCategoryIndex(idx)}/>
+            selectCategory={selectCategory}/>
         </div>
         <Sort 
           sortList={sortList}
-          sortTitle={sortTitle}
-          setSortTitle={(idx) => setSortTitle(idx)}
           arrowAsc={arrowAsc}
           setArrowAsc={(value) => setArrowAsc(value)}/>
       </div>
@@ -102,7 +103,10 @@ function HomePage() {
       <div className="content__items">
         {isLoading
           ? [...new Array(5)].map((_, idx) => <Skeleton key={idx} />)
-          : pizzas.map((el, idx) => <Card key={idx} {...el}/>)}
+          : pizzas.filter(obj => {
+            return obj.title.toLowerCase().includes(searchValue.toLowerCase()) 
+              ? true : false;
+          }).map((el, idx) => <Card key={idx} {...el}/>)}
       </div>
     </>
   );

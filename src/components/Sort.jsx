@@ -1,9 +1,13 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import dh from '../assets/helpers/domhelper.js';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSortTitle } from '../redux/slices/filterSlice.js';
 
-function Sort({ sortList, sortTitle, setSortTitle, arrowAsc, setArrowAsc }) {
+function Sort({ sortList, arrowAsc, setArrowAsc }) {
   const [open, setOpen] = useState(false);
   const sortRef = useRef(null);
+  const sortTitle = useSelector(state => state.filterSlice.sortTitle);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (open) dh.addEventListener('click', close);
@@ -16,7 +20,7 @@ function Sort({ sortList, sortTitle, setSortTitle, arrowAsc, setArrowAsc }) {
 
   const setSortTitleHandler = (event, idx) => {
     event.stopPropagation();
-    setSortTitle(idx);
+    dispatch(setSortTitle(idx));
     setOpen(false);
   };
 
@@ -34,7 +38,7 @@ function Sort({ sortList, sortTitle, setSortTitle, arrowAsc, setArrowAsc }) {
       {open && (
         <div className="sort__popup">
           <ul>
-            {sortList.map((el, idx) => (
+            {sortList.map((_, idx) => (
               <li
                 key={idx}
                 onClick={(event) => setSortTitleHandler(event, idx)}

@@ -1,5 +1,5 @@
-@import './variables';
-@import './libs/normalize';
+@import './components/variables';
+@import './components/normalize';
 @import './components/all';
 
 @mixin title($size) {
@@ -19,6 +19,7 @@ body {
   border-radius: 10px;
   max-width: 1615px;
   min-width: 465px;
+  zoom: 0.9;
 }
 
 .content {
@@ -48,12 +49,12 @@ body {
     grid-column-gap: 0px;
     grid-row-gap: 2px;
 
-    @media (max-width: 1560px) {
+    @media (max-width: 1260px) {
       grid-template-columns: repeat(3, 1fr);
       grid-template-rows: repeat(3, 1fr);
     }
 
-    @media (max-width: 1216px) {
+    @media (max-width: 970px) {
       grid-template-columns: repeat(2, 1fr);
       grid-template-rows: repeat(4, 1fr);
     }
@@ -216,7 +217,7 @@ body {
   }
 
   &.close {
-    transform: translateX(-485px);
+    transform: translateX(-585px);
   }
 }
 
