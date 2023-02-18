@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import IconClose from '../assets/img/close.svg';
 import { SearchContext } from '../App';
 
-function Search() {
+export default function Search() {
   const {searchValue, setSearchValue} = useContext(SearchContext);
 
   return (
@@ -22,5 +22,3 @@ function Search() {
     </div>
   );
 }
-
-export default Search;

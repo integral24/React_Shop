@@ -9,13 +9,13 @@ import { SearchContext } from '../App.js';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCategoryIndex } from '../redux/slices/filterSlice.js';
 
-function HomePage() {
+export default function HomePage() {
   const categoryIndex = useSelector(state => state.filterSlice.categoryIndex);
-  const sortList = useSelector(state => state.filterSlice.sortList);
-
   const sortTitle = useSelector(state => state.filterSlice.sortTitle);
+  const sortList = useSelector(state => state.filterSlice.sortList);
+  const arrowAsc = useSelector(state => state.filterSlice.arrowAsc);
+  
   const dispatch = useDispatch();
-  const [arrowAsc, setArrowAsc] = useState(false);
   const [pizzas, setPizzas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [title, setTitle] = useState('Bce');
@@ -27,16 +27,15 @@ function HomePage() {
     window.scrollTo(0, 0);
   }, [categoryIndex, sortTitle, arrowAsc]);
 
-  function createLink(link) {
+  const createLink = (link) => {
     const requestLink = categoryIndex === 0 
       ? `${link}?sortBy=${sortList[sortTitle].sort}` 
       : `${link}?category=${categoryIndex}&sortBy=${sortList[sortTitle].sort}`;
-
     const result = arrowAsc ? `${requestLink}&order=asc` : `${requestLink}&order=desc`;
     return result;
-  }
+  };
 
-  async function getPizzas(link) {
+  const getPizzas = async (link) => {
     try {
       setIsLoading(true);
       const { data } = await axios.get(createLink(link));
@@ -45,11 +44,11 @@ function HomePage() {
     } catch (err) {
       console.log('Error:', err.message);
     }
-  }
+  };
 
-  function changeTitle(title) {
+  const changeTitle = (title) => {
     setTitle(title);
-  }
+  };
 
   const closeBurgerMenu = () => {
     setBurgerOpen(false);
@@ -92,10 +91,7 @@ function HomePage() {
             value={categoryIndex}
             selectCategory={selectCategory}/>
         </div>
-        <Sort 
-          sortList={sortList}
-          arrowAsc={arrowAsc}
-          setArrowAsc={(value) => setArrowAsc(value)}/>
+        <Sort/>
       </div>
       <Title className="content__title medium">
         {title === 'Гриль' ? `Пиццы ${title}` : `${title} пиццы`}
@@ -111,5 +107,3 @@ function HomePage() {
     </>
   );
 }
-
-export default HomePage;

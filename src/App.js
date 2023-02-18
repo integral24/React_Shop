@@ -8,7 +8,7 @@ import Cart from './pages/Cart.jsx';
 
 export const SearchContext = createContext();
 
-function App() {
+export default function App() {
   const [searchValue, setSearchValue] = useState('');
 
   return (
@@ -28,5 +28,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

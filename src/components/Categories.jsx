@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Categories({ changeTitle, value, selectCategory, closeBurger }) {
+export default function Categories({ changeTitle, value, selectCategory, closeBurger }) {
   const categories = ['Все', 'Мясные', 'Вегетарианские', 'Гриль', 'Острые', 'Закрытые'];
 
   const selectActiveIndex = (idx) => {
@@ -25,5 +25,3 @@ function Categories({ changeTitle, value, selectCategory, closeBurger }) {
     </ul>
   );
 }
-
-export default Categories;

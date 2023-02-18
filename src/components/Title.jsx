@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Title({ children, className }) {
+export default function Title({ children, className }) {
   
   return (
     <h2 className={className}>
@@ -8,5 +8,3 @@ function Title({ children, className }) {
     </h2>
   );
 }
-
-export default Title;

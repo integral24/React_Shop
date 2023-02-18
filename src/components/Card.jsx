@@ -1,14 +1,10 @@
 import React from 'react';
 
-function Card({ title, price, imageUrl, sizes, types }) {
+export default function Card({ title, price, imageUrl, sizes, types }) {
   const typeNames = ['тонкая', 'традиционная'];
-
   const [activeType, setActiveType] = React.useState(0);
   const [activeSize, setActiveSize] = React.useState(0);
-
-  console.log();
   
-
   return (
     <div className="pizza-card">
       <div className="pizza-block">
@@ -48,5 +44,3 @@ function Card({ title, price, imageUrl, sizes, types }) {
     </div>
   );
 }
-
-export default Card;
