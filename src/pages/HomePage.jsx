@@ -1,45 +1,136 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
+import qs from 'qs';
+import { useNavigate } from 'react-router-dom';
 import Categories from '../components/Categories.jsx';
 import Sort from '../components/Sort.jsx';
 import Card from '../components/Card.jsx';
 import Skeleton from '../components/Skeleton.jsx';
 import axios from 'axios';
 import Title from '../components/Title.jsx';
+import Pagination from '../components/Pagination.jsx';
 import { SearchContext } from '../App.js';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCategoryIndex } from '../redux/slices/filterSlice.js';
+import { 
+  setCategoryIndex, 
+  setFilters, 
+  setSortTitle,
+  setActivePage,
+  setActiveNumberPage, 
+  setLoadMoreActivePage
+} from '../redux/slices/filterSlice.js';
+import { setPizzasCount } from '../redux/slices/productSlice.js';
+
+/* TODO:
+- Всеравно происходят 2 запроса на сервер при открытии ссылки с параметрами (после того, как добавил функцию setFilterParamsToURL добавления параметров в ссылку при непервой загркзке страницы) Вариант из курса и использованием юзэффекта не работает и каждый раз увеличиваетс количество перерендера true
+
+*/
+
 
 export default function HomePage() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const categoryIndex = useSelector(state => state.filterSlice.categoryIndex);
   const sortTitle = useSelector(state => state.filterSlice.sortTitle);
   const sortList = useSelector(state => state.filterSlice.sortList);
   const arrowAsc = useSelector(state => state.filterSlice.arrowAsc);
+  const activePage = useSelector(state => state.filterSlice.activePage);
+  const loadMoreActivePage = useSelector(state => state.filterSlice.loadMoreActivePage);
   
-  const dispatch = useDispatch();
+  const pizzasCount = useSelector(state => state.productSlice.pizzasCount);
+
   const [pizzas, setPizzas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [title, setTitle] = useState('Bce');
   const [burgerOpen, setBurgerOpen] = useState(false);
   const { searchValue } = useContext(SearchContext);
+  const isFirstLoad = useRef(true);
+  // const isMounted = useRef(false);
+  // console.log(isMounted);
+
+  const limitPizzas = 6;
+  const pages = Math.ceil(pizzasCount / limitPizzas);
 
   useEffect(() => {
-    getPizzas(`${process.env.REACT_APP_URL}/items`);
     window.scrollTo(0, 0);
-  }, [categoryIndex, sortTitle, arrowAsc]);
+    if (isFirstLoad.current) {
+      getFilterParamsFromURL();
+      getProducts();
+    } else {
+      getProducts();
+      setFilterParamsToURL();
+    }
+    isFirstLoad.current = false;
+  }, [categoryIndex, sortTitle, arrowAsc, activePage, searchValue]);
 
-  const createLink = (link) => {
+  // useEffect(() => {
+  //   if (isMounted) {
+  //     setFilterParamsToURL();
+  //   }
+  //   isMounted.current = true;
+  // }, []);
+
+  const getProducts = () => {
+    getPizzas(`${process.env.REACT_APP_URL}/products`);
+    dispatch(setLoadMoreActivePage(activePage + 1));
+  };
+
+  const getFilterParamsFromURL = () => {
+    if (isFirstLoad.current) {
+      if (window.location.search) {
+        const params = qs.parse(window.location.search.substring(1));
+        dispatch(setFilters(params));
+
+        let sortNumber = 0;
+        if (params.sortBy === 'price') {
+          sortNumber = 1;
+        } else if (params.sortBy === 'title') {
+          sortNumber = 2;
+        }
+        dispatch(setSortTitle(sortNumber));
+        isFirstLoad.current = false;
+      }
+    } else {
+      isFirstLoad.current = false;
+    }
+  };
+
+  const setFilterParamsToURL = () => {
+    const queryString = qs.stringify({
+      category: categoryIndex,
+      sortBy: sortList[sortTitle].sort,
+      order: arrowAsc,
+      page: activePage
+    });
+    navigate(`?${queryString}`);
+  };
+
+  const createSortLink = (link) => {
     const requestLink = categoryIndex === 0 
       ? `${link}?sortBy=${sortList[sortTitle].sort}` 
       : `${link}?category=${categoryIndex}&sortBy=${sortList[sortTitle].sort}`;
-    const result = arrowAsc ? `${requestLink}&order=asc` : `${requestLink}&order=desc`;
+    const result = `${requestLink}&order=${arrowAsc}`;
     return result;
+  };
+
+  const createSearchLink = (searchValue) => {
+    return searchValue ? `&search=${searchValue}` : '';
+  };
+
+  const createPaginationLink = (pageNumber, limitPizzas) => {
+    return `&page=${pageNumber}&limit=${limitPizzas}`;
   };
 
   const getPizzas = async (link) => {
     try {
       setIsLoading(true);
-      const { data } = await axios.get(createLink(link));
-      setPizzas(() => data);
+      const { data } = await axios.get(
+        createSortLink(link) +
+        createSearchLink(searchValue) +
+        createPaginationLink(activePage, limitPizzas)
+      );
+      dispatch(setPizzasCount(data.count));
+      setPizzas(data.items);
       setIsLoading(false);
     } catch (err) {
       console.log('Error:', err.message);
@@ -56,6 +147,22 @@ export default function HomePage() {
 
   const selectCategory = (index) => {
     dispatch(setCategoryIndex(index));
+    dispatch(setActivePage(1));
+    dispatch(setActiveNumberPage(1));
+    dispatch(setLoadMoreActivePage(2));
+  };
+
+  const addNextPage = async (link) => {
+    try {
+      const { data } = await axios.get(
+        createSortLink(link) +
+        createSearchLink(searchValue) +
+        createPaginationLink(loadMoreActivePage, limitPizzas)
+      );
+      setPizzas(prev => prev.concat(data.items));
+    } catch (err) {
+      console.log('Error:', err.message);
+    }
   };
 
   return (
@@ -71,7 +178,7 @@ export default function HomePage() {
             <div className="bp__header">
               <div className="bp__title"><strong>ВЫБОР КАТЕГОРИИ</strong></div>
               <button 
-                className='bp__button'
+                className="bp__button"
                 onClick={() => closeBurgerMenu()}>&#10006;
               </button>
             </div>
@@ -98,12 +205,13 @@ export default function HomePage() {
       </Title>
       <div className="content__items">
         {isLoading
-          ? [...new Array(5)].map((_, idx) => <Skeleton key={idx} />)
-          : pizzas.filter(obj => {
-            return obj.title.toLowerCase().includes(searchValue.toLowerCase()) 
-              ? true : false;
-          }).map((el, idx) => <Card key={idx} {...el}/>)}
+          ? [...new Array(6)].map((_, idx) => <Skeleton key={idx} />)
+          : pizzas.map((el, idx) => <Card key={idx} {...el}/>)}
       </div>
+      <Pagination 
+        pages={pages}
+        addNextPage={addNextPage}
+        loadMoreActivePage={loadMoreActivePage}/>
     </>
   );
 }

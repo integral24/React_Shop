@@ -16,7 +16,7 @@ export default function Sort() {
     if (open) dh.addEventListener('click', close);
     return () => dh.removeEventListener('click', close);
   }, [open]);
-
+  
   const close = useCallback((e) => {
     if (!sortRef.current?.contains(e.target)) setOpen(false);
   }, []);
@@ -34,12 +34,12 @@ export default function Sort() {
         <div onClick={() => setOpen(prev => !prev)}>
           <span className="sort__title"><strong>{sortList[sortTitle].name}</strong></span>
         </div>
-        <div className="icon-arrow" onClick={() => dispatch(setArrowAsc(!arrowAsc))}>
-          <div className={`icon-arrow-top ${!arrowAsc ? 'desc' : ''}`}></div>
+        <div className="icon-arrow" onClick={() => dispatch(setArrowAsc(arrowAsc === 'asc' ? 'desc' : 'asc'))}>
+          <div className={`icon-arrow-top ${arrowAsc === 'desc'? 'desc' : ''}`}></div>
         </div>
       </div>
       {open && (
-        <div className="sort__popup">
+        <div className="sort__popup"> 
           <ul>
             {sortList.map((_, idx) => (
               <li

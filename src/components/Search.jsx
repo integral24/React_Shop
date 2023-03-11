@@ -1,21 +1,43 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef, useCallback, useState } from 'react';
 import IconClose from '../assets/img/close.svg';
 import { SearchContext } from '../App';
+import debounce from 'lodash.debounce';
 
 export default function Search() {
-  const {searchValue, setSearchValue} = useContext(SearchContext);
+  const {setSearchValue} = useContext(SearchContext);
+  const inputRef = useRef();
+  const [value, setValue] = useState('');
+
+  const onClickClear = () => {
+    setValue('');
+    setSearchValue('');
+    inputRef.current.focus();
+  };
+
+  const updateSearchValue = useCallback(
+    debounce((str) => {
+      setSearchValue(str);
+    }, 250),
+    []
+  );
+
+  const onChangeInput = (event) => {
+    setValue(event.target.value);
+    updateSearchValue(event.target.value);
+  };
 
   return (
     <div className="search">
-      <input 
-        value={searchValue}
-        onChange={event => setSearchValue(event.target.value)} 
+      <input
+        ref={inputRef} 
+        value={value}
+        onChange={onChangeInput} 
         placeholder="Поиск пиццы.."/>
       <div className="icon-search"></div>
-      {searchValue && (
+      {value && (
         <img 
           className="icon-clear" 
-          onClick={() => setSearchValue('')}
+          onClick={onClickClear}
           src={IconClose} 
           alt="clear" />
       )}

@@ -1,0 +1,59 @@
+.load-more {
+
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  button {
+    cursor: pointer;
+    margin: 0 0 40px 0;
+    background-color: #F3F3F3;
+    padding: 13px 30px;
+    border-radius: 30px;
+    border: 0px solid;
+    font-weight: bold;
+    transition: background-color 0.1s ease-in-out;
+    @include noselect();
+
+    &:hover {
+      background-color: darken(#f9f9f9, 5%);
+      transition: background-color 0.1s ease-in-out;
+    }
+
+    &:active {
+      background-color: darken(#f9f9f9, 7%);
+      transition: background-color 0.1s ease-in-out;
+    }
+  }
+
+}
+
+.pagination {
+
+  display: flex;
+  
+  &__item {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    font-size: 14px;
+    border-radius: 35px;
+    cursor: pointer;
+    transition: background-color 0.1s ease-in-out;
+
+    &:hover {
+      background-color: darken(#f9f9f9, 5%);
+      transition: background-color 0.1s ease-in-out;
+    }
+  
+    &.active {
+      background-color: $orange;
+      color: #fff;
+      transition: background-color 0.1s ease-in-out;
+    }
+  }
+}
+

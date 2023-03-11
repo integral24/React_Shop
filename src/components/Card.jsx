@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-export default function Card({ title, price, imageUrl, sizes, types }) {
+export default function Card({ title, imageUrl, products, types }) {
   const typeNames = ['тонкая', 'традиционная'];
   const [activeType, setActiveType] = React.useState(0);
   const [activeSize, setActiveSize] = React.useState(0);
-  
+
+  useEffect(() => {
+    setActiveSize(products[0]);
+  }, []);
+
   return (
     <div className="pizza-card">
       <div className="pizza-block">
@@ -22,18 +26,18 @@ export default function Card({ title, price, imageUrl, sizes, types }) {
             ))}
           </ul>
           <ul>
-            {sizes.map((el, idx) => (
+            {products.map((el, idx) => (
               <li
                 key={idx}
-                onClick={() => setActiveSize(idx)}
-                className={activeSize === idx ? 'active' : ''}>
-                {el} см.
+                onClick={() => setActiveSize(el)}
+                className={activeSize.idProduct === el.idProduct ? 'active' : ''}>
+                {el.size} см.
               </li>
             ))}
           </ul>
         </div>
         <div className="pizza-block__bottom">
-          <div className="pizza-block__price">от {price} ₽</div>
+          <div className="pizza-block__price">от {activeSize.price} ₽</div>
           <button className="button button--outline button--add">
             <span className="icon-plus" />
             <span>Добавить</span>
