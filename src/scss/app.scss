@@ -23,7 +23,7 @@ body {
 }
 
 .content {
-  padding: 40px 0;
+  padding: 38px 0;
 
   &__title {
     margin: 20px 0 30px 0;
@@ -80,40 +80,36 @@ body {
         margin: -20px 0 18px 5px;
         cursor: pointer;
         background-color: #fff;
-        border: 1px solid $orange;
+        border: 0px solid $orange;
         border-radius: 16px;
         position: relative;
         transition: all $duration ease-in-out ;
         
         .burger__img {
-          background-image: url('../assets/img/burger.svg');
+          background-image: url('../assets/img/burger_white.svg');
           background-repeat: no-repeat;
           width: 100%;
           height: 100%;
           position: absolute;
           top: 4px;
           left: 4px;
+          transition: all $duration ease-in-out;
         }
 
         &:hover {
-          background-color: $orange;
-          transition: all $duration ease-in-out ;
 
           .burger__img {
-            background-image: url('../assets/img/burger_white.svg');
+            background-image: url('../assets/img/burger.svg');
             background-repeat: no-repeat;
             width: 100%;
             height: 100%;
             position: absolute;
             top: 4px;
             left: 4px;
+            transition: all $duration ease-in-out;
           }
         }
 
-        &:active {
-          background-color: darken($orange, 12%);
-          transform: translateY(1px);
-        }
       }
     }
   }
@@ -121,27 +117,36 @@ body {
 
 .burger__page {
   position: fixed;
-  top: 63px;
+  top: 0px;
   left: 0px;
   width: 56%;
+  height: 100%;
   z-index: 2;
   min-width: 262px;
   transform: translateX(0px);
   transition: transform 0.3s ease-in-out;
+  background-color: rgb(255 255 255 / 95%);
 
   .bp__header {
     display: flex;
-    justify-content: space-between;
-    background-color: rgb(254, 93, 30);
+    justify-content: center;
     padding: 18px 7% 18px 14%;
     align-items: center;
-    border-top-right-radius: 5px;
+    margin-top: 14px;
+    margin-bottom: 34px;
 
     .bp__title {
       font-size: 22px;
-      color: #fff;
+      color: #525252;;
       margin-top: 2px;
 
+      strong {
+        text-align: center;
+        font-size: 24px;
+        letter-spacing: 1%;
+        text-transform: uppercase;
+        font-weight: 800;
+      }
     }
 
     .bp__button {
@@ -149,6 +154,7 @@ body {
       width: 50px;
       height: 32px;
       border: 0px;
+      display: none;
       cursor: pointer;
       border-radius: 10px;
       margin-left: 10px;
@@ -166,8 +172,6 @@ body {
   .bp__categories {
     width: 100%;
     padding: 10%;
-    background-color: rgba(254, 95, 30, 0.8);
-    border-bottom-right-radius: 5px;
 
     ul {
       display: flex;
@@ -182,10 +186,11 @@ body {
           background-color: #F3F3F3;
           padding: 13px 30px;
           border-radius: 30px;
-          border: 2px solid #F3F3F3;
+          border: 0px solid #F3F3F3;
           margin-right: 8px;
           margin-bottom: 8px;
           font-weight: bold;
+          font-size: 18px;
           cursor: pointer;
           transition: background-color 0.1s ease-in-out;
           @include noselect();
@@ -193,19 +198,19 @@ body {
   
           &:hover {
             background-color: darken(#f9f9f9, 10%);
-            border: 2px solid darken(#f9f9f9, 10%);
+            border: 0px solid darken(#f9f9f9, 10%);
           }
   
           &:active {
             background-color: darken(#f9f9f9, 15%);
-            border: 2px solid darken(#f9f9f9, 15%);
+            border: 0px solid darken(#f9f9f9, 15%);
           }
   
           &.active {
             background-color: #282828;
             background-color: $orange;
             color: #fff;
-            border: 2px solid #fff;
+            border: 0px solid #fff;
           }
         }
       }
@@ -223,7 +228,7 @@ body {
 
   &--cart {
     max-width: 820px;
-    margin: 90px auto;
+    margin: 0 auto;
 
     .content__title {
       margin: 0;
@@ -456,12 +461,12 @@ body {
 
   &--empty {
     margin: 0 auto;
-    width: 560px;
+    width: 620px;
     text-align: center;
 
     h2 {
       font-size: 32px;
-      margin-bottom: 10px;
+      margin-bottom: 22px;
     }
 
     p {

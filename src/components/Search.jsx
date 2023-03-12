@@ -4,7 +4,7 @@ import { SearchContext } from '../App';
 import debounce from 'lodash.debounce';
 
 export default function Search() {
-  const {setSearchValue} = useContext(SearchContext);
+  const { setSearchValue } = useContext(SearchContext);
   const inputRef = useRef();
   const [value, setValue] = useState('');
 
@@ -18,7 +18,7 @@ export default function Search() {
     debounce((str) => {
       setSearchValue(str);
     }, 250),
-    []
+    [],
   );
 
   const onChangeInput = (event) => {
@@ -28,19 +28,9 @@ export default function Search() {
 
   return (
     <div className="search">
-      <input
-        ref={inputRef} 
-        value={value}
-        onChange={onChangeInput} 
-        placeholder="Поиск пиццы.."/>
+      <input ref={inputRef} value={value} onChange={onChangeInput} placeholder="Поиск пиццы.." />
       <div className="icon-search"></div>
-      {value && (
-        <img 
-          className="icon-clear" 
-          onClick={onClickClear}
-          src={IconClose} 
-          alt="clear" />
-      )}
+      {value && <img className="icon-clear" onClick={onClickClear} src={IconClose} alt="clear" />}
     </div>
   );
 }

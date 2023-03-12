@@ -1,13 +1,33 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addItem } from '../redux/slices/cartSlice.js';
 
-export default function Card({ title, imageUrl, products, types }) {
-  const typeNames = ['тонкая', 'традиционная'];
-  const [activeType, setActiveType] = React.useState(0);
-  const [activeSize, setActiveSize] = React.useState(0);
+export default function Card({ id, title, imageUrl, products, types }) {
+  const typeNames = ['тонкое', 'традиционное'];
+  const [activeType, setActiveType] = useState(0);
+  const [activeProduct, setActiveProduct] = useState({});
+
+  const dispatch = useDispatch();
+  const addCount = useSelector((state) => state.cartSlice.items.filter((el) => el.idCard === id));
+  const itemCount = addCount.length ? addCount.reduce((sum, el) => sum + el.count, 0) : 0;
 
   useEffect(() => {
-    setActiveSize(products[0]);
+    setActiveProduct(products[0]);
   }, []);
+
+  const onClickAdd = () => {
+    const item = {
+      idCard: id,
+      title,
+      imageUrl,
+      idProduct: activeProduct.idProduct,
+      price: activeProduct.price,
+      type: typeNames[activeType],
+      size: activeProduct.size,
+      count: 1,
+    };
+    dispatch(addItem(item));
+  };
 
   return (
     <div className="pizza-card">
@@ -29,19 +49,19 @@ export default function Card({ title, imageUrl, products, types }) {
             {products.map((el, idx) => (
               <li
                 key={idx}
-                onClick={() => setActiveSize(el)}
-                className={activeSize.idProduct === el.idProduct ? 'active' : ''}>
+                onClick={() => setActiveProduct(el)}
+                className={activeProduct.idProduct === el.idProduct ? 'active' : ''}>
                 {el.size} см.
               </li>
             ))}
           </ul>
         </div>
         <div className="pizza-block__bottom">
-          <div className="pizza-block__price">от {activeSize.price} ₽</div>
-          <button className="button button--outline button--add">
+          <div className="pizza-block__price">от {activeProduct.price} ₽</div>
+          <button className="button button--outline button--add" onClick={() => onClickAdd()}>
             <span className="icon-plus" />
             <span>Добавить</span>
-            <i>0</i>
+            {itemCount > 0 && <i><p>{itemCount}</p></i>}
           </button>
         </div>
       </div>

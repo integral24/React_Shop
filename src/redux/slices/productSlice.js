@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  pizzasCount: 0
+  pizzasCount: 0,
 };
 
 const productSlice = createSlice({
@@ -10,13 +10,10 @@ const productSlice = createSlice({
   reducers: {
     setPizzasCount(state, action) {
       state.pizzasCount = action.payload;
-    }
- 
-  }
+    },
+  },
 });
 
-export const {
-  setPizzasCount 
-} = productSlice.actions;
+export const { setPizzasCount } = productSlice.actions;
 
 export default productSlice.reducer;

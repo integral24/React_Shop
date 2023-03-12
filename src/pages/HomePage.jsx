@@ -10,13 +10,13 @@ import Title from '../components/Title.jsx';
 import Pagination from '../components/Pagination.jsx';
 import { SearchContext } from '../App.js';
 import { useSelector, useDispatch } from 'react-redux';
-import { 
-  setCategoryIndex, 
-  setFilters, 
+import {
+  setCategoryIndex,
+  setFilters,
   setSortTitle,
   setActivePage,
-  setActiveNumberPage, 
-  setLoadMoreActivePage
+  setActiveNumberPage,
+  setLoadMoreActivePage,
 } from '../redux/slices/filterSlice.js';
 import { setPizzasCount } from '../redux/slices/productSlice.js';
 
@@ -25,19 +25,18 @@ import { setPizzasCount } from '../redux/slices/productSlice.js';
 
 */
 
-
 export default function HomePage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const categoryIndex = useSelector(state => state.filterSlice.categoryIndex);
-  const sortTitle = useSelector(state => state.filterSlice.sortTitle);
-  const sortList = useSelector(state => state.filterSlice.sortList);
-  const arrowAsc = useSelector(state => state.filterSlice.arrowAsc);
-  const activePage = useSelector(state => state.filterSlice.activePage);
-  const loadMoreActivePage = useSelector(state => state.filterSlice.loadMoreActivePage);
-  
-  const pizzasCount = useSelector(state => state.productSlice.pizzasCount);
+  const categoryIndex = useSelector((state) => state.filterSlice.categoryIndex);
+  const sortTitle = useSelector((state) => state.filterSlice.sortTitle);
+  const sortList = useSelector((state) => state.filterSlice.sortList);
+  const arrowAsc = useSelector((state) => state.filterSlice.arrowAsc);
+  const activePage = useSelector((state) => state.filterSlice.activePage);
+  const loadMoreActivePage = useSelector((state) => state.filterSlice.loadMoreActivePage);
+
+  const pizzasCount = useSelector((state) => state.productSlice.pizzasCount);
 
   const [pizzas, setPizzas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -100,15 +99,16 @@ export default function HomePage() {
       category: categoryIndex,
       sortBy: sortList[sortTitle].sort,
       order: arrowAsc,
-      page: activePage
+      page: activePage,
     });
     navigate(`?${queryString}`);
   };
 
   const createSortLink = (link) => {
-    const requestLink = categoryIndex === 0 
-      ? `${link}?sortBy=${sortList[sortTitle].sort}` 
-      : `${link}?category=${categoryIndex}&sortBy=${sortList[sortTitle].sort}`;
+    const requestLink =
+      categoryIndex === 0
+        ? `${link}?sortBy=${sortList[sortTitle].sort}`
+        : `${link}?category=${categoryIndex}&sortBy=${sortList[sortTitle].sort}`;
     const result = `${requestLink}&order=${arrowAsc}`;
     return result;
   };
@@ -126,8 +126,8 @@ export default function HomePage() {
       setIsLoading(true);
       const { data } = await axios.get(
         createSortLink(link) +
-        createSearchLink(searchValue) +
-        createPaginationLink(activePage, limitPizzas)
+          createSearchLink(searchValue) +
+          createPaginationLink(activePage, limitPizzas),
       );
       dispatch(setPizzasCount(data.count));
       setPizzas(data.items);
@@ -156,10 +156,10 @@ export default function HomePage() {
     try {
       const { data } = await axios.get(
         createSortLink(link) +
-        createSearchLink(searchValue) +
-        createPaginationLink(loadMoreActivePage, limitPizzas)
+          createSearchLink(searchValue) +
+          createPaginationLink(loadMoreActivePage, limitPizzas),
       );
-      setPizzas(prev => prev.concat(data.items));
+      setPizzas((prev) => prev.concat(data.items));
     } catch (err) {
       console.log('Error:', err.message);
     }
@@ -169,36 +169,37 @@ export default function HomePage() {
     <>
       <div className="content__top">
         <div className="burger">
-          <button 
-            className="burger__button"
-            onClick={() => setBurgerOpen(true)}>
+          <button className="burger__button" onClick={() => setBurgerOpen(true)}>
             <div className="burger__img"></div>
           </button>
           <div className={!burgerOpen ? 'burger__page close' : 'burger__page'}>
             <div className="bp__header">
-              <div className="bp__title"><strong>ВЫБОР КАТЕГОРИИ</strong></div>
-              <button 
-                className="bp__button"
-                onClick={() => closeBurgerMenu()}>&#10006;
+              <div className="bp__title">
+                <strong>ВЫБОР КАТЕГОРИИ</strong>
+              </div>
+              <button className="bp__button" onClick={() => closeBurgerMenu()}>
+                &#10006;
               </button>
             </div>
             <div className="bp__categories">
-              <Categories 
+              <Categories
                 changeTitle={changeTitle}
-                closeBurger={() => closeBurgerMenu()} 
+                closeBurger={() => closeBurgerMenu()}
                 value={categoryIndex}
-                selectCategory={selectCategory}/>
+                selectCategory={selectCategory}
+              />
             </div>
           </div>
         </div>
         <div className="categories">
-          <Categories 
-            changeTitle={changeTitle} 
-            closeBurger={() => closeBurgerMenu()} 
+          <Categories
+            changeTitle={changeTitle}
+            closeBurger={() => closeBurgerMenu()}
             value={categoryIndex}
-            selectCategory={selectCategory}/>
+            selectCategory={selectCategory}
+          />
         </div>
-        <Sort/>
+        <Sort />
       </div>
       <Title className="content__title medium">
         {title === 'Гриль' ? `Пиццы ${title}` : `${title} пиццы`}
@@ -206,12 +207,9 @@ export default function HomePage() {
       <div className="content__items">
         {isLoading
           ? [...new Array(6)].map((_, idx) => <Skeleton key={idx} />)
-          : pizzas.map((el, idx) => <Card key={idx} {...el}/>)}
+          : pizzas.map((el, idx) => <Card key={idx} {...el} />)}
       </div>
-      <Pagination 
-        pages={pages}
-        addNextPage={addNextPage}
-        loadMoreActivePage={loadMoreActivePage}/>
+      <Pagination pages={pages} addNextPage={addNextPage} loadMoreActivePage={loadMoreActivePage} />
     </>
   );
 }

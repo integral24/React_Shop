@@ -2,17 +2,10 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 export default function Categories({ changeTitle, value, selectCategory, closeBurger }) {
-  const categoryIndex = useSelector(state => state.filterSlice.categoryIndex);
-  
-  const categories = [
-    'Все', 
-    'Мясные', 
-    'Вегетарианские', 
-    'Гриль', 
-    'Острые', 
-    'Закрытые'
-  ];
-  
+  const categoryIndex = useSelector((state) => state.filterSlice.categoryIndex);
+
+  const categories = ['Все', 'Мясные', 'Вегетарианские', 'Гриль', 'Острые', 'Закрытые'];
+
   useEffect(() => {
     changeTitle(categories[categoryIndex]);
   }, [categoryIndex]);

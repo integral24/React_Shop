@@ -3,14 +3,15 @@ import Search from './Search.jsx';
 import PizzaLogo from '../assets/img/pizza-logo.svg';
 import PizzaCart from '../assets/img/cart.svg';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { 
-  setCategoryIndex, 
+import {
+  setCategoryIndex,
   setSortTitle,
   setArrowAsc,
   setActivePage,
-  setActiveNumberPage, 
-  setLoadMoreActivePage
+  setActiveNumberPage,
+  setLoadMoreActivePage,
 } from '../redux/slices/filterSlice.js';
 
 export default function Header() {
@@ -25,10 +26,14 @@ export default function Header() {
     dispatch(setLoadMoreActivePage(2));
   };
 
+  const { totalPrice } = useSelector((state) => state.cartSlice);
+  const addCount = useSelector((state) => state.cartSlice.items);
+  const itemsCount = addCount.length ? addCount.reduce((sum, el) => sum + el.count, 0) : 0;
+
   return (
     <div className="header">
       <div className="container">
-        <Link onClick={getDefaultPage} to='/'>
+        <Link onClick={getDefaultPage} to="/">
           <div className="header__logo">
             <img width="38" src={PizzaLogo} alt="Pizza logo" />
             <div>
@@ -37,13 +42,13 @@ export default function Header() {
             </div>
           </div>
         </Link>
-        <Search/>
+        <Search />
         <div className="header__cart">
           <Link to="/cart" className="button button--cart">
-            <span>520 ₽</span>
+            <span>{totalPrice} ₽</span>
             <div className="button__delimiter"></div>
             <img src={PizzaCart} alt="cart" />
-            <span>3</span>
+            <span>{itemsCount}</span>
           </Link>
         </div>
       </div>
