@@ -1,10 +1,9 @@
-import React from 'react';
-import Search from './Search.jsx';
+import React, { useState } from 'react';
+import Search from './Search';
 import PizzaLogo from '../assets/img/pizza-logo.svg';
 import PizzaCart from '../assets/img/cart.svg';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   setCategoryIndex,
   setSortTitle,
@@ -12,12 +11,17 @@ import {
   setActivePage,
   setActiveNumberPage,
   setLoadMoreActivePage,
-} from '../redux/slices/filterSlice.js';
+  setSearchValue,
+} from '../redux/slices/filterSlice';
+import { RootState } from '../redux/store';
 
-export default function Header() {
+const Header: React.FC = () => {
   const dispatch = useDispatch();
+  const [value, setValue] = useState<string>('');
 
   const getDefaultPage = () => {
+    setValue('');
+    dispatch(setSearchValue(''));
     dispatch(setCategoryIndex(0));
     dispatch(setSortTitle(0));
     dispatch(setArrowAsc('asc'));
@@ -26,9 +30,9 @@ export default function Header() {
     dispatch(setLoadMoreActivePage(2));
   };
 
-  const { totalPrice } = useSelector((state) => state.cartSlice);
-  const addCount = useSelector((state) => state.cartSlice.items);
-  const itemsCount = addCount.length ? addCount.reduce((sum, el) => sum + el.count, 0) : 0;
+  const { totalPrice } = useSelector((state: RootState) => state.cartSlice);
+  const addCount = useSelector((state: RootState) => state.cartSlice.items);
+  const itemsCount = addCount.length ? addCount.reduce((sum: number, el) => sum + el.count, 0) : 0;
 
   return (
     <div className="header">
@@ -37,12 +41,12 @@ export default function Header() {
           <div className="header__logo">
             <img width="38" src={PizzaLogo} alt="Pizza logo" />
             <div>
-              <h1>Pizza Stars</h1>
-              <p>самая вкусная пицца во вселенной</p>
+              <h1>Pizza Original</h1>
+              <p>Настоящая итальянская пицца</p>
             </div>
           </div>
         </Link>
-        <Search />
+        <Search value={value} setValue={setValue} />
         <div className="header__cart">
           <Link to="/cart" className="button button--cart">
             <span>{totalPrice} ₽</span>
@@ -54,4 +58,6 @@ export default function Header() {
       </div>
     </div>
   );
-}
+};
+
+export default Header;

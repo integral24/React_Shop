@@ -1,27 +1,27 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import dh from '../assets/helpers/domhelper.js';
 import { useSelector, useDispatch } from 'react-redux';
-import { setSortTitle, setArrowAsc } from '../redux/slices/filterSlice.js';
+import { setSortTitle, setArrowAsc } from '../redux/slices/filterSlice';
+import { RootState } from '../redux/store';
 
-export default function Sort() {
-  const sortList = useSelector((state) => state.filterSlice.sortList);
-  const sortTitle = useSelector((state) => state.filterSlice.sortTitle);
-  const arrowAsc = useSelector((state) => state.filterSlice.arrowAsc);
+const Sort: React.FC = () => {
+  const sortList = useSelector((state: RootState) => state.filterSlice.sortList);
+  const sortTitle = useSelector((state: RootState) => state.filterSlice.sortTitle);
+  const arrowAsc = useSelector((state: RootState) => state.filterSlice.arrowAsc);
   const dispatch = useDispatch();
 
   const [open, setOpen] = useState(false);
-  const sortRef = useRef(null);
+  const sortRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (open) dh.addEventListener('click', close);
-    return () => dh.removeEventListener('click', close);
+    if (open) document.body.addEventListener('click', close);
+    return () => document.body.removeEventListener('click', close);
   }, [open]);
 
-  const close = useCallback((e) => {
-    if (!sortRef.current?.contains(e.target)) setOpen(false);
+  const close = useCallback((event: MouseEvent) => {
+    if (!sortRef.current?.contains(event.target as HTMLElement)) setOpen(false);
   }, []);
 
-  const setSortTitleHandler = (event, idx) => {
+  const setSortTitleHandler = (event: React.MouseEvent<HTMLLIElement>, idx: number) => {
     event.stopPropagation();
     dispatch(setSortTitle(idx));
     setOpen(false);
@@ -45,7 +45,7 @@ export default function Sort() {
       {open && (
         <div className="sort__popup">
           <ul>
-            {sortList.map((_, idx) => (
+            {sortList.map((_, idx: number) => (
               <li
                 key={idx}
                 onClick={(event) => setSortTitleHandler(event, idx)}
@@ -58,4 +58,6 @@ export default function Sort() {
       )}
     </div>
   );
-}
+};
+
+export default Sort;

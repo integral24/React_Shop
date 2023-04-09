@@ -1,15 +1,16 @@
 import React from 'react';
-import CartItem from '../components/CartItem.jsx';
+import CartItem from '../components/CartItem';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearItems } from '../redux/slices/cartSlice.js';
-import CartEmpty from '../components/CartEmpty.jsx';
+import { clearItems } from '../redux/slices/cartSlice';
+import CartEmpty from '../components/CartEmpty';
+import { RootState } from '../redux/store';
 
-export default function Cart() {
+const Cart: React.FC = () => {
   const dispatch = useDispatch();
-  const { totalPrice } = useSelector((state) => state.cartSlice);
-  const items = useSelector((state) => state.cartSlice.items);
-  const itemCount = items.length ? items.reduce((sum, el) => sum + el.count, 0) : 0;
+  const { totalPrice } = useSelector((state: RootState) => state.cartSlice);
+  const items = useSelector((state: RootState) => state.cartSlice.items);
+  const itemCount = items.length ? items.reduce((sum: number, el) => sum + el.count, 0) : 0;
 
   if (!totalPrice) {
     return <CartEmpty />;
@@ -49,7 +50,7 @@ export default function Cart() {
           </svg>
           Корзина
         </h2>
-        <div className="cart__clear" onClick={() => dispatch(clearItems([]))}>
+        <div className="cart__clear" onClick={() => dispatch(clearItems())}>
           <svg
             width="20"
             height="20"
@@ -89,11 +90,9 @@ export default function Cart() {
         </div>
       </div>
       <div className="content__items__cart">
-        {
-          items.map((el, idx) => (
-            <CartItem key={idx} {...el}/>
-          ))
-        }
+        {items.map((el, idx: number) => (
+          <CartItem key={idx} {...el} />
+        ))}
       </div>
       <div className="cart__bottom">
         <div className="cart__bottom-details">
@@ -131,4 +130,6 @@ export default function Cart() {
       </div>
     </div>
   );
-}
+};
+
+export default Cart;

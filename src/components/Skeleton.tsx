@@ -1,7 +1,7 @@
 import React from 'react';
 import ContentLoader from 'react-content-loader';
 
-export default function Skeleton(props) {
+const Skeleton: React.FC = (props) => {
   return (
     <div className="pizza-card">
       <ContentLoader
@@ -20,4 +20,6 @@ export default function Skeleton(props) {
       </ContentLoader>
     </div>
   );
-}
+};
+
+export default Skeleton;

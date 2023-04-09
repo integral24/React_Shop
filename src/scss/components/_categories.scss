@@ -2,12 +2,13 @@
 
 .categories {
   max-width: 760px;
+  position: relative;
 
-  @media (max-width: 830px) {
+  &__label {
     display: none;
   }
 
-  ul {
+  &__content {
     display: flex;
     flex-wrap: wrap;
 
@@ -37,6 +38,81 @@
           background-color: #282828;
           background-color: $orange;
           color: #fff;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 845px) {
+    &__label {
+      display: flex;
+      margin-top: 10px;
+      white-space: nowrap;
+
+      &__name {
+
+        @media (max-width: 700px) {
+          display: none;
+        }
+      }
+
+      .categories__title {
+        margin: 0 20px 0 8px;
+        color: #fe5f1e;
+        cursor: pointer;
+        user-select: none;
+        border-bottom: 1px dashed #fe5f1e;        
+      }
+    }
+
+    &__popup {
+      display: none;
+
+      &.active {
+        display: block;
+        position: absolute;
+        right: 0;
+        margin-top: 15px;
+        background: #ffffff;
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.09);
+        border-radius: 10px;
+        overflow: hidden;
+        padding: 10px 0;
+        width: 160px;
+  
+        .categories__content {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+      
+          li {
+            width: 100%;
+      
+            button {
+              background-color: #f3f3f300;
+              border-radius: 0px;
+              border: 0px solid;
+              padding: 12px 20px;
+              width: 100%;
+              cursor: pointer;
+              margin: 0px;
+              font-family: Nunito, Roboto, system-ui, Tahoma, sans-serif;
+              font-weight: normal;
+              font-size: 16px;
+              text-align: left;
+              @include noselect();
+      
+              &:hover {
+                background: rgba(254, 95, 30, 0.05);
+              }
+  
+              &.active {
+                font-weight: bold;
+                color: #fe5f1e;
+                background: rgba(254, 95, 30, 0.05);
+              }
+            }
+          }
         }
       }
     }

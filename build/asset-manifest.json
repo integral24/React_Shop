@@ -1,22 +1,23 @@
 {
   "files": {
-    "main.css": "/static/css/main.969a3f9a.css",
-    "main.js": "/static/js/main.d614aa92.js",
+    "main.css": "/static/css/main.c2c308f4.css",
+    "main.js": "/static/js/main.41b6d49d.js",
+    "Cart.js": "/static/js/Cart.3e870bd5.chunk.js",
+    "static/media/empty-cart.png": "/static/media/empty-cart.db905d1f4b063162f25b.png",
     "static/media/pizza-logo.svg": "/static/media/pizza-logo.56ac87032d8f6fdf863326acd06c0d97.svg",
     "static/media/cart.svg": "/static/media/cart.f43aeafbe1d287a9d3d2ffc2890dc0c5.svg",
     "index.html": "/index.html",
     "static/media/plus-white.svg": "/static/media/plus-white.a6e1af0fbbf90a89c5fe.svg",
     "static/media/plus.svg": "/static/media/plus.8fd8034f658f1df4f443.svg",
-    "static/media/burger.svg": "/static/media/burger.f3f181eb88059a4158f5.svg",
-    "static/media/burger_white.svg": "/static/media/burger_white.501fe16018f131493e6c.svg",
     "static/media/arrow-top.svg": "/static/media/arrow-top.8a732a7211d0fa00bfd6.svg",
     "static/media/close.svg": "/static/media/close.e99ed57a6a54300df6daef1ded1a18e2.svg",
     "static/media/search.svg": "/static/media/search.bb7cc6d1c164acb5c4d0.svg",
-    "main.969a3f9a.css.map": "/static/css/main.969a3f9a.css.map",
-    "main.d614aa92.js.map": "/static/js/main.d614aa92.js.map"
+    "main.c2c308f4.css.map": "/static/css/main.c2c308f4.css.map",
+    "main.41b6d49d.js.map": "/static/js/main.41b6d49d.js.map",
+    "Cart.3e870bd5.chunk.js.map": "/static/js/Cart.3e870bd5.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.969a3f9a.css",
-    "static/js/main.d614aa92.js"
+    "static/css/main.c2c308f4.css",
+    "static/js/main.41b6d49d.js"
   ]
 }

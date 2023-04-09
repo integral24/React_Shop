@@ -5,13 +5,20 @@ import {
   setActivePage,
   setLoadMoreActivePage,
   setActiveNumberPage,
-} from '../redux/slices/filterSlice.js';
+} from '../redux/slices/filterSlice';
+import { RootState } from '../redux/store';
 
-export default function Pagination({ pages, addNextPage, loadMoreActivePage }) {
+interface IPaginationProps {
+  pages: number;
+  addNextPage: (link: string) => void;
+  loadMoreActivePage: number;
+}
+
+const Pagination: React.FC<IPaginationProps> = ({ pages, addNextPage, loadMoreActivePage }) => {
   const dispatch = useDispatch();
-  const activeNumberPage = useSelector((state) => state.filterSlice.activeNumberPage);
+  const activeNumberPage = useSelector((state: RootState) => state.filterSlice.activeNumberPage);
 
-  const getPage = (number) => {
+  const getPage = (number: number) => {
     dispatch(setActivePage(number));
     dispatch(setActiveNumberPage(number));
   };
@@ -47,4 +54,6 @@ export default function Pagination({ pages, addNextPage, loadMoreActivePage }) {
       </div>
     </>
   );
-}
+};
+
+export default Pagination;

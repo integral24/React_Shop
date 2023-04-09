@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function NotFoundPage() {
+const NotFoundPage: React.FC = () => {
   return (
     <div className="not-found-page">
       <h1>
@@ -13,4 +13,6 @@ export default function NotFoundPage() {
       </p>
     </div>
   );
-}
+};
+
+export default NotFoundPage;
