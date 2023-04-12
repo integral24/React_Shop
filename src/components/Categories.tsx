@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useCallback, MouseEventHandler } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 
