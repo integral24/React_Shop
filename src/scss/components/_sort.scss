@@ -2,12 +2,14 @@
 
 .sort {
   position: relative;
+  padding-bottom: 21px;
+  width: max-content;
   
   &__label {
     display: flex;
     align-items: center;
-    width: 265px;
     margin-top: 10px;
+    white-space: nowrap;
 
     b {
       margin-right: 8px;
@@ -38,6 +40,7 @@
     overflow: hidden;
     padding: 10px 0;
     width: 160px;
+    z-index: 2;
 
     ul {
       overflow: hidden;

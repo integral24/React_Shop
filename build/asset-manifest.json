@@ -1,23 +1,29 @@
 {
   "files": {
-    "main.css": "/static/css/main.c2c308f4.css",
-    "main.js": "/static/js/main.41b6d49d.js",
-    "Cart.js": "/static/js/Cart.3e870bd5.chunk.js",
+    "main.css": "/static/css/main.b84cfd4a.css",
+    "main.js": "/static/js/main.8ea749d5.js",
+    "Cart.js": "/static/js/Cart.fd04a5d0.chunk.js",
     "static/media/empty-cart.png": "/static/media/empty-cart.db905d1f4b063162f25b.png",
     "static/media/pizza-logo.svg": "/static/media/pizza-logo.56ac87032d8f6fdf863326acd06c0d97.svg",
     "static/media/cart.svg": "/static/media/cart.f43aeafbe1d287a9d3d2ffc2890dc0c5.svg",
     "index.html": "/index.html",
+    "static/media/cart-close-white.svg": "/static/media/cart-close-white.ffa7f8c078ff2b268df6.svg",
+    "static/media/cart-close.svg": "/static/media/cart-close.81b7f110ada85194a806.svg",
+    "static/media/cart-plus-white.svg": "/static/media/cart-plus-white.ffa7f8c078ff2b268df6.svg",
+    "static/media/cart-plus.svg": "/static/media/cart-plus.ab8931268036f5b2cff4.svg",
     "static/media/plus-white.svg": "/static/media/plus-white.a6e1af0fbbf90a89c5fe.svg",
     "static/media/plus.svg": "/static/media/plus.8fd8034f658f1df4f443.svg",
+    "static/media/cart-minus-white.svg": "/static/media/cart-minus-white.412d1ff9a29b311ec9a9.svg",
+    "static/media/cart-minus.svg": "/static/media/cart-minus.346d714e1337884c898f.svg",
     "static/media/arrow-top.svg": "/static/media/arrow-top.8a732a7211d0fa00bfd6.svg",
     "static/media/close.svg": "/static/media/close.e99ed57a6a54300df6daef1ded1a18e2.svg",
     "static/media/search.svg": "/static/media/search.bb7cc6d1c164acb5c4d0.svg",
-    "main.c2c308f4.css.map": "/static/css/main.c2c308f4.css.map",
-    "main.41b6d49d.js.map": "/static/js/main.41b6d49d.js.map",
-    "Cart.3e870bd5.chunk.js.map": "/static/js/Cart.3e870bd5.chunk.js.map"
+    "main.b84cfd4a.css.map": "/static/css/main.b84cfd4a.css.map",
+    "main.8ea749d5.js.map": "/static/js/main.8ea749d5.js.map",
+    "Cart.fd04a5d0.chunk.js.map": "/static/js/Cart.fd04a5d0.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.c2c308f4.css",
-    "static/js/main.41b6d49d.js"
+    "static/css/main.b84cfd4a.css",
+    "static/js/main.8ea749d5.js"
   ]
 }

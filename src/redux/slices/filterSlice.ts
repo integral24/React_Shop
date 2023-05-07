@@ -6,7 +6,7 @@ interface IFilterSliceState {
   categoryIndex: number;
   sortTitle: number;
   sortList: {
-    name: 'популярности' | 'цене' | 'алфавиту';
+    name: 'Популярности' | 'Цене' | 'Алфавиту';
     sort: 'rating' | 'price' | 'title';
   }[];
   arrowAsc: string;
@@ -20,9 +20,9 @@ const initialState: IFilterSliceState = {
   categoryIndex: 0,
   sortTitle: 0,
   sortList: [
-    { name: 'популярности', sort: 'rating' },
-    { name: 'цене', sort: 'price' },
-    { name: 'алфавиту', sort: 'title' },
+    { name: 'Популярности', sort: 'rating' },
+    { name: 'Цене', sort: 'price' },
+    { name: 'Алфавиту', sort: 'title' },
   ],
   arrowAsc: 'asc',
   activePage: 1,

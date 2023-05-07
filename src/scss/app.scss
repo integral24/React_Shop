@@ -1,3 +1,4 @@
+@import './components/grid';
 @import './components/variables';
 @import './components/normalize';
 @import './components/all';
@@ -11,15 +12,23 @@ body {
   padding: 0 calc(20px - (100vw - 100%)) 0 0;
 }
 
+.svg-icon {
+  width: 30px;
+  height: 30px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 .wrapper {
-  width: calc(100vw - 100px);
   height: 100%;
   background-color: #fff;
   margin: 50px auto;
   border-radius: 10px;
-  max-width: 1615px;
-  min-width: 465px;
-  zoom: 0.9;
+  max-width: 1480px;
+
+  @include media-breakpoint-down(xs) {
+    margin: 0px auto;
+  }
 }
 
 .content {
@@ -46,19 +55,18 @@ body {
   &__items {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-column-gap: 0px;
-    grid-row-gap: 2px;
-    margin-top: 50px;
+    grid-gap: 10px;
+    margin: 50px 0;
 
-    @media (max-width: 1260px) {
+    @include media-breakpoint-down(md) {
       grid-template-columns: repeat(3, 1fr);
     }
 
-    @media (max-width: 970px) {
+    @include media-breakpoint-down(sm) {
       grid-template-columns: repeat(2, 1fr);
     }
 
-    @media (max-width: 700px) {
+    @include media-breakpoint-down(mxs) {
       grid-template-columns: repeat(1, 1fr);
     }
   }
@@ -67,6 +75,10 @@ body {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
+
+    @include media-breakpoint-down(mxs) {
+      display: block;
+    }
   }
 }
 
@@ -185,15 +197,29 @@ body {
       width: 13%;
 
       &-minus {
-        svg {
-          path:first-of-type {
-            display: none;
+        .svg-icon {
+          background-image: url('../assets/img/cart-minus.svg');
+        }
+        &:hover {
+          .svg-icon {
+            background-image: url('../assets/img/cart-minus-white.svg');
           }
         }
       }
 
       b {
         font-size: 22px;
+      }
+
+      &-plus {
+        .svg-icon {
+          background-image: url('../assets/img/cart-plus.svg');
+        }
+        &:hover {
+          .svg-icon {
+            background-image: url('../assets/img/cart-plus-white.svg');
+          }
+        }
       }
     }
 
@@ -218,22 +244,18 @@ body {
 
       .button {
         border-color: darken($color: $gray-line, $amount: 10);
-      }
 
-      svg {
-        transform: rotate(45deg);
-
-        path {
-          fill: darken($color: $gray-line, $amount: 15);
+        .svg-icon {
+          background-image: url('../assets/img/cart-close.svg');
+          transform: rotate(45deg);
+        }
+        &:hover {
+          .svg-icon {
+            background-image: url('../assets/img/cart-close-white.svg');
+          }
         }
       }
-
       .button {
-        svg {
-          width: 11.5px;
-          height: 11.5px;
-          position: relative;
-        }
         &:hover,
         &:active {
           border-color: darken($color: $gray-line, $amount: 80);

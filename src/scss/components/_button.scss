@@ -12,6 +12,11 @@
   border: 1px solid transparent;
   @include noselect();
 
+  &:disabled {
+    opacity: .3;
+    cursor: not-allowed;
+  }
+
   &,
   span {
     color: #fff;
@@ -98,7 +103,8 @@
   &--add {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 4px;
+    max-height: 40px;
 
     & .icon-plus {
       background-image: url('../../assets/img/plus.svg');
@@ -106,11 +112,12 @@
       width: 12px;
       height: 12px;
       margin-top: 3px;
+      display: none;
     }
 
     span {
       font-weight: 600;
-      font-size: 16px;
+      font-size: 14px;
     }
 
     i {
@@ -157,6 +164,7 @@
     line-height: 23px;
     padding: 12px 25px;
     min-width: 140px;
+    width: max-content;
 
     img {
       margin-right: 8px;

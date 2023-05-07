@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Search from './Search';
 import PizzaLogo from '../assets/img/pizza-logo.svg';
 import PizzaCart from '../assets/img/cart.svg';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   setCategoryIndex,
@@ -16,6 +16,8 @@ import {
 import { RootState } from '../redux/store';
 
 const Header: React.FC = () => {
+
+  const isSearch = !useLocation().pathname.includes('cart');
   const dispatch = useDispatch();
   const [value, setValue] = useState<string>('');
 
@@ -42,11 +44,13 @@ const Header: React.FC = () => {
             <img width="38" src={PizzaLogo} alt="Pizza logo" />
             <div>
               <h1>Pizza Original</h1>
-              <p>Настоящая итальянская пицца</p>
+              <p>Итальянская пицца</p>
             </div>
           </div>
         </Link>
-        <Search value={value} setValue={setValue} />
+        {isSearch && (
+          <Search value={value} setValue={setValue} />
+        )}
         <div className="header__cart">
           <Link to="/cart" className="button button--cart">
             <span>{totalPrice} ₽</span>

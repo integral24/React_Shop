@@ -1,13 +1,21 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import './scss/app.scss';
 import Header from './components/Header';
 import { Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
 import FullCardItem from './pages/FullCardItem';
+import { getCart } from './redux/slices/cartSlice';
+import { useAppDispatch } from './hooks/redux';
 const Cart = React.lazy(() => import(/* webpackChunkName: "Cart" */ './pages/Cart'));
 
 const App: React.FC = () => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getCart());
+  }, []);
+
   return (
     <div className="wrapper">
       <Header />

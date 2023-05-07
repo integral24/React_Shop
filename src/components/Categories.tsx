@@ -42,7 +42,7 @@ const Categories: React.FC<ICategoriesProps> = ({ changeTitle, value, selectCate
     <div className="categories" ref={categoriesRef}>
       <div className="categories__label">
         <div className="categories__label__name">
-          <b>Выбор категории:</b>
+          <b>Категория:</b>
         </div>
         <div onClick={() => setOpen((prev) => !prev)}>
           <span className="categories__title">
