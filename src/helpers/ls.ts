@@ -1,6 +1,6 @@
 export default {
-  getItem<R>(key: string): R {
-    return JSON.parse(localStorage.getItem(key) ?? '');
+  getItem<R>(key = ''): R {
+    return JSON.parse(localStorage.getItem(key) || 'null');
   },
   setItem<T>(key: string, value: T) {
     localStorage.setItem(key, JSON.stringify(value));

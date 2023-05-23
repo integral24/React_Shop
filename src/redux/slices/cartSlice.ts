@@ -65,13 +65,15 @@ const cartSlice = createSlice({
     clearItems(state) {
       state.items = [];
       state.totalPrice = 0;
-      
+
       ls.removeItem('cartState');
     },
     getCart(state) {
       const cart = ls.getItem<ICartSliceState>('cartState');
-      state.items = cart.items;
-      state.totalPrice = cart.totalPrice;
+      if (cart) {
+        state.items = cart.items;
+        state.totalPrice = cart.totalPrice;
+      }
     },
   },
 });
